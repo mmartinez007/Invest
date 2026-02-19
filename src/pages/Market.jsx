@@ -4,6 +4,7 @@ import { TrendingUp, TrendingDown, Star, Search, Flame, BarChart2, RefreshCw, Ne
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import CoinDetail from '../components/CoinDetail';
+import { API_DOMAIN } from '../config';
 
 export default function Market() {
     const { formatValue, convert } = useCurrency();
@@ -39,7 +40,7 @@ export default function Market() {
         if (!silent) setLoading(true);
         setRefreshing(true);
         try {
-            const res = await fetch('/api/market/trending');
+            const res = await fetch(`${API_DOMAIN}/api/market/trending`);
             if (res.ok) {
                 const d = await res.json();
                 setData(d);
@@ -55,7 +56,7 @@ export default function Market() {
 
     async function loadWatchlist() {
         try {
-            const res = await fetch('/api/watchlist', {
+            const res = await fetch(`${API_DOMAIN}/api/watchlist`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (res.ok) {
@@ -67,14 +68,14 @@ export default function Market() {
 
     async function loadFGI() {
         try {
-            const res = await fetch('/api/market/fgi');
+            const res = await fetch(`${API_DOMAIN}/api/market/fgi`);
             if (res.ok) setFgi(await res.json());
         } catch { }
     }
 
     async function loadNews() {
         try {
-            const res = await fetch('/api/market/news');
+            const res = await fetch(`${API_DOMAIN}/api/market/news`);
             if (res.ok) setNews(await res.json());
         } catch { }
     }
@@ -82,14 +83,14 @@ export default function Market() {
     async function toggleWatchlist(coin) {
         const isWatched = watchlist.includes(coin.id);
         if (isWatched) {
-            await fetch(`/api/watchlist/${coin.id}`, {
+            await fetch(`${API_DOMAIN}/api/watchlist/${coin.id}`, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token}` }
             });
             setWatchlist(prev => prev.filter(id => id !== coin.id));
             toast.info(`${coin.name || coin.symbol} removed from watchlist`);
         } else {
-            await fetch('/api/watchlist', {
+            await fetch(`${API_DOMAIN}/api/watchlist`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                 body: JSON.stringify({

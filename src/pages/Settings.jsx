@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { Settings as SettingsIcon, Download, Shield, CreditCard, Globe, Trash2 } from 'lucide-react';
+import { API_DOMAIN } from '../config';
 
 export default function Settings() {
     const { user, token, isPro, upgradeToPro, logout } = useAuth();
@@ -11,7 +12,7 @@ export default function Settings() {
 
     async function handleExport() {
         try {
-            const res = await fetch('/api/subscription/export', { headers });
+            const res = await fetch(`${API_DOMAIN}/api/subscription/export`, { headers });
             if (res.ok) {
                 const blob = await res.blob();
                 const url = URL.createObjectURL(blob);

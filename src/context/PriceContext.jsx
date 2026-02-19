@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
+import { API_DOMAIN, getWsUrl } from '../config';
 
 const PriceContext = createContext(null);
 
@@ -19,8 +20,7 @@ export function PriceProvider({ children }) {
 
     function connectWs() {
         try {
-            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsUrl = `${protocol}//${window.location.hostname}:3001/ws`;
+            const wsUrl = `${getWsUrl()}/ws`;
             const ws = new WebSocket(wsUrl);
 
             ws.onopen = () => {
@@ -70,7 +70,7 @@ export function PriceProvider({ children }) {
     const fetchPrices = useCallback(async (coinIds) => {
         if (coinIds.length === 0) return;
         try {
-            const res = await fetch(`/api/prices?ids=${coinIds.join(',')}`);
+            const res = await fetch(`${API_DOMAIN}/api/prices?ids=${coinIds.join(',')}`);
             if (res.ok) {
                 const data = await res.json();
                 setPrices(prev => ({ ...prev, ...data.prices }));

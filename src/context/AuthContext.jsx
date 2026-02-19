@@ -2,7 +2,9 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext(null);
 
-const API_BASE = '/api';
+import { API_DOMAIN } from '../config';
+
+const API_BASE = `${API_DOMAIN}/api`;
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
@@ -103,6 +105,7 @@ export function AuthProvider({ children }) {
         logout,
         updateCurrency,
         upgradeToPro,
+        API_DOMAIN, // Export for easy access in components if needed
     };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -4,6 +4,7 @@ import { useCurrency } from '../context/CurrencyContext';
 import { usePrices } from '../context/PriceContext';
 import { Star, Trash2, Plus, TrendingUp, TrendingDown } from 'lucide-react';
 import CoinDetail from '../components/CoinDetail';
+import { API_DOMAIN } from '../config';
 
 export default function Watchlist() {
     const { token } = useAuth();
@@ -20,7 +21,7 @@ export default function Watchlist() {
     async function loadWatchlist() {
         setLoading(true);
         try {
-            const res = await fetch('/api/watchlist', {
+            const res = await fetch(`${API_DOMAIN}/api/watchlist`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (res.ok) {
@@ -40,7 +41,7 @@ export default function Watchlist() {
     }
 
     async function removeFromWatchlist(coinId) {
-        await fetch(`/api/watchlist/${coinId}`, {
+        await fetch(`${API_DOMAIN}/api/watchlist/${coinId}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         });

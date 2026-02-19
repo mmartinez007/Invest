@@ -5,6 +5,7 @@ import MetricCard from '../components/MetricCard';
 import PortfolioChart from '../components/PortfolioChart';
 import SubscriptionBanner from '../components/SubscriptionBanner';
 import { BarChart3, AlertTriangle, TrendingUp, Shield } from 'lucide-react';
+import { API_DOMAIN } from '../config';
 
 export default function Analytics() {
     const { token, isPro } = useAuth();
@@ -21,7 +22,7 @@ export default function Analytics() {
 
     async function loadPortfolio() {
         try {
-            const res = await fetch('/api/portfolios', { headers });
+            const res = await fetch(`${API_DOMAIN}/api/portfolios`, { headers });
             if (res.ok) {
                 const data = await res.json();
                 if (data.length > 0) {
@@ -39,7 +40,7 @@ export default function Analytics() {
     async function loadAnalytics(pid) {
         setLoading(true);
         try {
-            const res = await fetch(`/api/analytics/${pid}`, { headers });
+            const res = await fetch(`${API_DOMAIN}/api/analytics/${pid}`, { headers });
             if (res.ok) {
                 const data = await res.json();
                 setAnalytics(data);

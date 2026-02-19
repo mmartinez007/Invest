@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { useToast } from '../context/ToastContext';
 import { Clock, Trash2, ArrowUpRight, ArrowDownRight, Filter } from 'lucide-react';
+import { API_DOMAIN } from '../config';
 
 export default function Transactions() {
     const { token } = useAuth();
@@ -21,7 +22,7 @@ export default function Transactions() {
 
     async function loadPortfolio() {
         try {
-            const res = await fetch('/api/portfolios', { headers });
+            const res = await fetch(`${API_DOMAIN}/api/portfolios`, { headers });
             if (res.ok) {
                 const data = await res.json();
                 if (data.length > 0) {
@@ -39,7 +40,7 @@ export default function Transactions() {
     async function loadOrders(pid) {
         setLoading(true);
         try {
-            const res = await fetch(`/api/orders/${pid}`, { headers });
+            const res = await fetch(`${API_DOMAIN}/api/orders/${pid}`, { headers });
             if (res.ok) {
                 const data = await res.json();
                 setOrders(data);
@@ -54,7 +55,7 @@ export default function Transactions() {
     async function deleteOrder(orderId) {
         if (!confirm('Delete this transaction?')) return;
         try {
-            const res = await fetch(`/api/orders/${portfolioId}/${orderId}`, {
+            const res = await fetch(`${API_DOMAIN}/api/orders/${portfolioId}/${orderId}`, {
                 method: 'DELETE',
                 headers
             });

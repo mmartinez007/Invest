@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { X, Search } from 'lucide-react';
+import { API_DOMAIN } from '../config';
 
 export default function AddOrderModal({ portfolioId, onClose, onSuccess }) {
     const { token } = useAuth();
@@ -29,7 +30,7 @@ export default function AddOrderModal({ portfolioId, onClose, onSuccess }) {
         searchTimeoutRef.current = setTimeout(async () => {
             setSearching(true);
             try {
-                const res = await fetch(`/api/prices/search?query=${encodeURIComponent(query)}`);
+                const res = await fetch(`${API_DOMAIN}/api/prices/search?query=${encodeURIComponent(query)}`);
                 if (res.ok) {
                     const data = await res.json();
                     setResults(data);
@@ -46,7 +47,7 @@ export default function AddOrderModal({ portfolioId, onClose, onSuccess }) {
         setSelectedCoin(coin);
         setStep('form');
         // Try to get current price
-        fetch(`/api/prices?ids=${coin.id}`)
+        fetch(`${API_DOMAIN}/api/prices?ids=${coin.id}`)
             .then(r => r.json())
             .then(data => {
                 if (data.prices?.[coin.id]?.usd) {
@@ -65,7 +66,7 @@ export default function AddOrderModal({ portfolioId, onClose, onSuccess }) {
         }
         setLoading(true);
         try {
-            const res = await fetch(`/api/orders/${portfolioId}`, {
+            const res = await fetch(`${API_DOMAIN}/api/orders/${portfolioId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

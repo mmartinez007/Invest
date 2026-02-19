@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useCurrency } from '../context/CurrencyContext';
 import { X, TrendingUp, TrendingDown, ExternalLink } from 'lucide-react';
+import { API_DOMAIN } from '../config';
 
 export default function CoinDetail({ coin, onClose }) {
     const { formatValue } = useCurrency();
@@ -39,7 +40,7 @@ export default function CoinDetail({ coin, onClose }) {
     async function loadChartData() {
         setChartLoading(true);
         try {
-            const res = await fetch(`/api/market/chart/${coinId}?days=${chartDays}`);
+            const res = await fetch(`${API_DOMAIN}/api/market/chart/${coinId}?days=${chartDays}`);
             if (res.ok) {
                 const data = await res.json();
                 setChartData(data.prices || []);
