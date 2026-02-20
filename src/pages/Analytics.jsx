@@ -40,7 +40,7 @@ export default function Analytics() {
     async function loadAnalytics(pid) {
         setLoading(true);
         try {
-            const res = await fetch(`${API_DOMAIN}/api/analytics/${pid}`, { headers });
+            const res = await fetch(`${API_DOMAIN}/api/analytics?portfolioId=${pid}`, { headers });
             if (res.ok) {
                 const data = await res.json();
                 setAnalytics(data);

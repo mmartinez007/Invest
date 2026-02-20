@@ -23,7 +23,7 @@ export function CurrencyProvider({ children }) {
 
     async function fetchEurRate() {
         try {
-            const res = await fetch(`${API_DOMAIN}/api/prices/eur-rate`);
+            const res = await fetch(`${API_DOMAIN}/api/prices?action=eur-rate`);
             if (res.ok) {
                 const data = await res.json();
                 setEurRate(data.eur_rate);
@@ -53,7 +53,7 @@ export function CurrencyProvider({ children }) {
         setCurrency(next);
         if (token) {
             try {
-                await fetch(`${API_DOMAIN}/api/auth/currency`, {
+                await fetch(`${API_DOMAIN}/api/auth?action=currency`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                     body: JSON.stringify({ currency: next }),

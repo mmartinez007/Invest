@@ -12,7 +12,7 @@ export default function Settings() {
 
     async function handleExport() {
         try {
-            const res = await fetch(`${API_DOMAIN}/api/subscription/export`, { headers });
+            const res = await fetch(`${API_DOMAIN}/api/subscription?action=export`, { headers });
             if (res.ok) {
                 const blob = await res.blob();
                 const url = URL.createObjectURL(blob);

@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
 
     async function fetchUser() {
         try {
-            const res = await fetch(`${API_BASE}/auth/me`, {
+            const res = await fetch(`${API_BASE}/auth?action=me`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             if (res.ok) {
@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
     }
 
     async function login(email, password) {
-        const res = await fetch(`${API_BASE}/auth/login`, {
+        const res = await fetch(`${API_BASE}/auth?action=login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
@@ -52,7 +52,7 @@ export function AuthProvider({ children }) {
     }
 
     async function register(email, password) {
-        const res = await fetch(`${API_BASE}/auth/register`, {
+        const res = await fetch(`${API_BASE}/auth?action=register`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
@@ -72,7 +72,7 @@ export function AuthProvider({ children }) {
     }
 
     async function updateCurrency(currency) {
-        const res = await fetch(`${API_BASE}/auth/currency`, {
+        const res = await fetch(`${API_BASE}/auth?action=currency`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ export function AuthProvider({ children }) {
     }
 
     async function upgradeToPro() {
-        const res = await fetch(`${API_BASE}/subscription/upgrade`, {
+        const res = await fetch(`${API_BASE}/subscription?action=upgrade`, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}` },
         });

@@ -16,7 +16,7 @@ export function PriceProvider({ children }) {
     const fetchPricesFromApi = useCallback(async (coinIds) => {
         if (!coinIds || coinIds.length === 0) return;
         try {
-            const res = await fetch(`${API_DOMAIN}/api/prices?ids=${coinIds.join(',')}`);
+            const res = await fetch(`${API_DOMAIN}/api/prices?action=prices&ids=${coinIds.join(',')}`);
             if (res.ok) {
                 const data = await res.json();
                 if (data.prices) setPrices(prev => ({ ...prev, ...data.prices }));

@@ -40,7 +40,7 @@ export default function Market() {
         if (!silent) setLoading(true);
         setRefreshing(true);
         try {
-            const res = await fetch(`${API_DOMAIN}/api/market/trending`);
+            const res = await fetch(`${API_DOMAIN}/api/market?action=trending`);
             if (res.ok) {
                 const d = await res.json();
                 setData(d);
@@ -68,14 +68,14 @@ export default function Market() {
 
     async function loadFGI() {
         try {
-            const res = await fetch(`${API_DOMAIN}/api/market/fgi`);
+            const res = await fetch(`${API_DOMAIN}/api/market?action=fgi`);
             if (res.ok) setFgi(await res.json());
         } catch { }
     }
 
     async function loadNews() {
         try {
-            const res = await fetch(`${API_DOMAIN}/api/market/news`);
+            const res = await fetch(`${API_DOMAIN}/api/market?action=news`);
             if (res.ok) setNews(await res.json());
         } catch { }
     }
@@ -83,7 +83,7 @@ export default function Market() {
     async function toggleWatchlist(coin) {
         const isWatched = watchlist.includes(coin.id);
         if (isWatched) {
-            await fetch(`${API_DOMAIN}/api/watchlist/${coin.id}`, {
+            await fetch(`${API_DOMAIN}/api/watchlist?coinId=${coin.id}`, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token}` }
             });

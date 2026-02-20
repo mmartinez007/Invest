@@ -40,7 +40,7 @@ export default function CoinDetail({ coin, onClose }) {
     async function loadChartData() {
         setChartLoading(true);
         try {
-            const res = await fetch(`${API_DOMAIN}/api/market/chart/${coinId}?days=${chartDays}`);
+            const res = await fetch(`${API_DOMAIN}/api/market?action=chart&coinId=${coinId}&days=${chartDays}`);
             if (res.ok) {
                 const data = await res.json();
                 setChartData(data.prices || []);

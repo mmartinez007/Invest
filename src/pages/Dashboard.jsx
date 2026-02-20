@@ -58,7 +58,7 @@ export default function Dashboard() {
     async function loadHoldings() {
         setLoading(true);
         try {
-            const res = await fetch(`${API_DOMAIN}/api/orders/${activePortfolio.id}/holdings`, { headers });
+            const res = await fetch(`${API_DOMAIN}/api/orders?portfolioId=${activePortfolio.id}&action=holdings`, { headers });
             if (res.ok) {
                 const data = await res.json();
                 setHoldings(data);
@@ -78,7 +78,7 @@ export default function Dashboard() {
 
     async function loadEquityCurve() {
         try {
-            const res = await fetch(`${API_DOMAIN}/api/analytics/${activePortfolio.id}`, { headers });
+            const res = await fetch(`${API_DOMAIN}/api/analytics?portfolioId=${activePortfolio.id}`, { headers });
             if (res.ok) {
                 const data = await res.json();
                 setEquityCurve(data.equity_curve || []);
@@ -111,7 +111,7 @@ export default function Dashboard() {
     // Save snapshot
     useEffect(() => {
         if (activePortfolio && portfolioValue > 0) {
-            fetch(`${API_DOMAIN}/api/analytics/${activePortfolio.id}/snapshot`, {
+            fetch(`${API_DOMAIN}/api/analytics?portfolioId=${activePortfolio.id}&action=snapshot`, {
                 method: 'POST',
                 headers: { ...headers, 'Content-Type': 'application/json' },
                 body: JSON.stringify({ total_value_usd: portfolioValue }),
